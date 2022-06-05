@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'instagram',
     'crispy_forms',
 ]
-CRISPY_TEMPLATE_PACK = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'uni_form'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
