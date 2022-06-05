@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'instagram'
-    'crispy_forms'
+    'instagram',
+    'crispy_forms',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
@@ -126,7 +126,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static/'
 ]
 
-MEDIA_ROOT = BASE_DIR / 'static/images'
+MEDIA_ROOT = BASE_DIR / 'static/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
