@@ -1,9 +1,0 @@
-<form action="{% url 'like_image' image.pk %}" method="POST">          
-    {% csrf_token %}
-
-    <button class="btn btn-sm" type="submit", name="image_id" ,value="{{image.id}}"><i
-            class="fa fa-heart hearticon mx-auto" aria-hidden="true" style="color:red"></i></a>
-    </button>
-   
-</form>
-<span>{{ total_likes }} like{{ total_likes | pluralize}}</span>
