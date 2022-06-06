@@ -12,5 +12,6 @@ urlpatterns = [
     path('like', views.like_post, name='like_post'),
     path('search/', views.search_profile, name='search'),
     path('unfollow/<to_unfollow>', views.unfollow, name='unfollow'),
-    path('follow/<to_follow>', views.follow, name='follow')
+    path('follow/<to_follow>', views.follow, name='follow'),
+    path('logout/',views.logout_user, name='logout')
 ]

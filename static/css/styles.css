@@ -18,7 +18,7 @@ h1{
     display:none;
 }
 .reg{
-    background-color:#f9f9f9;
+    background-color:blue;
 }
 .alert{
     margin:0;
@@ -31,7 +31,7 @@ h1{
     font-size:12px;
 }
 .navbar{
-    background-color:white;
+    background-color:blue;
 }
 .instaicon{
     display: inline-block;
@@ -144,4 +144,6 @@ body{
     display: block;
 
 }
+
+
  

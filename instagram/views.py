@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, UpdateUserForm, UpdateUserProfileForm, PostForm, CommentForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate,logout
 from .models import Post, Comment, Profile, Follow
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
-from django.views.decorators.csrf import csrf_exempt
+
 
 
 # Create your views here.
@@ -50,7 +50,7 @@ def index(request):
 
 @login_required(login_url='login')
 def profile(request, username):
-    images = request.user.profile.posts.all()
+    images = request.user.profile.post.all()
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user)
         prof_form = UpdateUserProfileForm(request.POST, request.FILES, instance=request.user.profile)
@@ -75,7 +75,7 @@ def user_profile(request, username):
     user_prof = get_object_or_404(User, username=username)
     if request.user == user_prof:
         return redirect('profile', username=request.user.username)
-    user_posts = user_prof.profile.posts.all()
+    user_posts = user_prof.profile.post.all()
     
     followers = Follow.objects.filter(followed=user_prof.profile)
     follow_status = None
@@ -93,7 +93,6 @@ def user_profile(request, username):
     print(followers)
     return render(request, 'instagram/user_profile.html', params)
 
-@csrf_exempt
 @login_required(login_url='login')
 def post_comment(request, id):
     image = get_object_or_404(Post, pk=id)
@@ -115,6 +114,7 @@ def post_comment(request, id):
         'form': form,
         'is_liked': is_liked,
         'total_likes': image.total_likes()
+      
     }
     return render(request, 'instagram/single_post.html', params)
 
@@ -170,3 +170,7 @@ def follow(request, to_follow):
         follow_s = Follow(follower=request.user.profile, followed=user_profile3)
         follow_s.save()
         return redirect('user_profile', user_profile3.user.username)
+    
+def logout_user(request):
+    logout(request)
+    return redirect('index')    
