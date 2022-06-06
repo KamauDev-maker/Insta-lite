@@ -6,6 +6,7 @@ from django.contrib.auth import login, authenticate
 from .models import Post, Comment, Profile, Follow
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
+from django.views.decorators.csrf import csrf_exempt
 
 
 # Create your views here.
@@ -92,7 +93,7 @@ def user_profile(request, username):
     print(followers)
     return render(request, 'instagram/user_profile.html', params)
 
-
+@csrf_exempt
 @login_required(login_url='login')
 def post_comment(request, id):
     image = get_object_or_404(Post, pk=id)
