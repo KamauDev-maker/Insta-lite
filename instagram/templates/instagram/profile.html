@@ -62,7 +62,7 @@
         {% for image in images %}
             <div class="card">
                 <div class="card-body">
-                    <img src="{{image.image.url}}" alt="{{image.caption}}" class="card-img">
+                    <img src="{{image.image.url}}" class="card-img">
                     <p id="overlay"class="text"> 
                             <i class="fas fa-heart" style="color:white; font-size: 18"></i> 
                             <span style="color: white">{{image.likes.count}}</span>

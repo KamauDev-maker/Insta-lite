@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect,get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,JsonResponse
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, UpdateUserForm, UpdateUserProfileForm, PostForm, CommentForm
 from django.contrib.auth import login, authenticate,logout
 from .models import Post, Comment, Profile, Follow
 from django.contrib.auth.models import User
-from django.template.loader import render_to_string
+from django.urls import reverse_lazy,reverse
+
 
 
 
@@ -15,8 +16,10 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
+    
             username = form.cleaned_data.get('username')
+            created_user = form.save()
+            Profile.objects.get_or_create(user=created_user)
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
@@ -93,50 +96,40 @@ def user_profile(request, username):
     print(followers)
     return render(request, 'instagram/user_profile.html', params)
 
-@login_required(login_url='login')
-def post_comment(request, id):
-    image = get_object_or_404(Post, pk=id)
-    is_liked = False
-    if image.likes.filter(id=request.user.id).exists():
-        is_liked = True
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            savecomment = form.save(commit=False)
-            savecomment.post = image
-            savecomment.user = request.user.profile
-            savecomment.save()
-            return HttpResponseRedirect(request.path_info)
-    else:
-        form = CommentForm()
-    params = {
-        'image': image,
-        'form': form,
-        'is_liked': is_liked,
-        'total_likes': image.total_likes()
+# @login_required(login_url='login')
+# def post_comment(request, id):
+#     image = get_object_or_404(Post, pk=id)
+#     is_liked = False
+#     if image.likes.filter(id=request.user.id).exists():
+#         is_liked = True
+#     if request.method == 'POST':
+#         form = CommentForm(request.POST)
+#         if form.is_valid():
+#             savecomment = form.save(commit=False)
+#             savecomment.post = image
+#             savecomment.user = request.user.profile
+#             savecomment.save()
+#             return HttpResponseRedirect(request.path_info)
+#     else:
+#         form = CommentForm()
+#     params = {
+#         'image': image,
+#         'form': form,
+#         'is_liked': is_liked,
+#         'total_likes': image.total_likes()
       
-    }
-    return render(request, 'instagram/single_post.html', params)
+#     }
+#     return render(request, 'instagram/single_post.html', params)
 
-def like_post(request):
-    # image = get_object_or_404(Post, id=request.POST.get('image_id'))
-    image = get_object_or_404(Post, id=request.POST.get('id'))
-    is_liked = False
-    if image.likes.filter(id=request.user.id).exists():
-        image.likes.remove(request.user)
-        is_liked = False
-    else:
-        image.likes.add(request.user)
-        is_liked = False
 
-    params = {
-        'image': image,
-        'is_liked': is_liked,
-        'total_likes': image.total_likes()
-    }
-    # if request.is_ajax():
-    #     html = render_to_string('instagram/like_section.html', params, request=request)
-    #     return JsonResponse({'form': html})
+def LikeView (request,pk):
+    post = get_object_or_404(Post,id=request.POST.get('image_id'))
+    images.likes.add(request.user)
+    return HttpResponseRedirect(reverse_lazy('user',args=[str(pk)]))
+
+    
+
+
 
 
 @login_required(login_url='login')

@@ -39,7 +39,7 @@ class Profile(models.Model):
 class Post(models.Model):
     image = models.ImageField(upload_to ='post/')
     name = models.CharField(max_length=200,blank=True)
-    likes = models.ManyToManyField(User, related_name='likes',blank=True)
+    likes = models.ManyToManyField(User, related_name='user',blank=True)
     user = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='post')  
     created = models.DateTimeField(auto_now_add=True,null=True)
     
@@ -66,9 +66,9 @@ class Post(models.Model):
         return f'{self.user.name} Post'
     
 class Comment(models.Model):
-    comment = models.TextField()
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments')
+    body = models.TextField()
+    post = models.ForeignKey(Post, related_name='comments',on_delete=models.CASCADE)
+    name = models.CharField(max_length=200,blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
