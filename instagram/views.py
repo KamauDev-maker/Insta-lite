@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect,get_object_or_404
-from django.http import HttpResponseRedirect,JsonResponse
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, UpdateUserForm, UpdateUserProfileForm, PostForm, CommentForm
 from django.contrib.auth import login, authenticate
@@ -133,9 +133,9 @@ def like_post(request):
         'is_liked': is_liked,
         'total_likes': image.total_likes()
     }
-    if request.is_ajax():
-        html = render_to_string('instagram/like_section.html', params, request=request)
-        return JsonResponse({'form': html})
+    # if request.is_ajax():
+    #     html = render_to_string('instagram/like_section.html', params, request=request)
+    #     return JsonResponse({'form': html})
 
 
 @login_required(login_url='login')
