@@ -122,14 +122,13 @@ def post_comment(request, id):
     return render(request, 'instagram/single_post.html', params)
 
 
-def LikeView (request,pk):
-    image= get_object_or_404(Post,id=request.POST.get('image_id'))
-    image.likes.add(request.user)
-    return HttpResponseRedirect(reverse_lazy('user',args=[str(pk)]))
-
-    
-
-
+def Like_View(request,pk):
+    if request.method =='POST':
+        post = get_object_or_404(Post, id=pk)
+        post.likes.add(request.user)
+        print(post)
+        return HttpResponseRedirect(reverse('index'))
+    return redirect('index')
 
 
 @login_required(login_url='login')

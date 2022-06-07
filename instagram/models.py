@@ -8,7 +8,7 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    profile_image = models.ImageField(upload_to ='images/')
+    profile_image = models.ImageField(upload_to ='images/',default= 'static/images/default-img.jpg')
     bio = models.TextField(max_length=500,blank=True)
     name = models.CharField(max_length = 200,blank=True)
 
@@ -72,7 +72,7 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return '%s - %s' % (self.post.title, self.name)
+        return '%s - %s' % (self.post, self.name)
     
     
 class Follow(models.Model):

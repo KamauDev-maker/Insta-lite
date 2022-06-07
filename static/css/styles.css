@@ -95,3 +95,8 @@ button{
 .media-body{
     text-decoration: none;
 }
+
+
+.formHint{
+    display: none;
+}
