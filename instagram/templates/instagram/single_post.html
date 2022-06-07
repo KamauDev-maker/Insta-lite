@@ -17,7 +17,7 @@
                 <hr style="width:96%">
                 {% for comment in image.comments.all %}
                 <div class="comment">
-                    <div class="ml-2"><strong>{{ comment.user.user.username }}</strong> <span class="text-secondary">{{ comment.comment }}</span>
+                    <div class="ml-2"><strong>{{ comment.user.user.username }}</strong> <span class="text-secondary">{{ comment.body }}</span>
                     </div>
                 </div>
                 {% empty %}
