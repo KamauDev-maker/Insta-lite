@@ -55,9 +55,9 @@
                         </button>         
                     </form>
 
-                    <button class="btn btn-sm" type="submit"><a href="{% url 'comment' image.id %}"><i
-                        class="far fa-comment hearticon mx-auto" aria-hidden="true"></i>
-                    </a></button>
+                     <button class="btn btn-sm" type="submit"><a href="{% url 'comment' image.id %}"><i
+                            class="far fa-comment hearticon mx-auto" aria-hidden="true"></i>
+                        </a></button>
 
                 </div>
                 <span class="ml-4 mb-1"><strong>{{image.likes.count}} like{{image.likes.count|pluralize}}</strong></span>
